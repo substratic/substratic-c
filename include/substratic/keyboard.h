@@ -10,7 +10,7 @@
 #define KEY_STATE_PRESS    GLFW_PRESS
 #define KEY_STATE_REPEAT   GLFW_REPEAT
 
-Uint8 subst_keyboard_key_state(SubstraticWindow window, int keyCode) {
+uint8_t subst_keyboard_key_state(SubstraticWindow window, int keyCode) {
   return glfwGetKey((GLFWwindow *)window, keyCode);
 }
 

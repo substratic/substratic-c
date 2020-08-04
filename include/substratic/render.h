@@ -6,6 +6,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <cglm/cglm.h>
 
 void subst_render_clear_color_set(float r, float g, float b) {
   glClearColor(r, g, b, 1.0f);
@@ -53,6 +54,21 @@ uint subst_render_shader_program_link(const uint* shaderIds, uint shaderCount) {
   glLinkProgram(shaderProgram);
 
   return shaderProgram;
+}
+
+void subst_render_shader_use(uint shaderProgramId) {
+  glUseProgram(shaderProgramId);
+}
+
+void subst_render_shader_mat4_set(uint shaderProgramId, const char* uniformName, mat4 matrix) {
+  unsigned int uniformLoc = glGetUniformLocation(shaderProgramId, uniformName);
+  if (uniformLoc == -1) {
+    // TODO: Panic
+    printf("Could not find shader matrix parameter: %s\n", uniformName);
+    exit(1);
+  }
+
+  glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, matrix[0]);
 }
 
 void subst_render_rect_line(float x, float y, float w, float h) {
